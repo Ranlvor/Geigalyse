@@ -1,0 +1,13 @@
+PRAGMA foreign_keys=OFF;
+BEGIN TRANSACTION;
+CREATE TABLE "uploads" (
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "uploader" INTEGER,
+    "uploadtime" INTEGER,
+    "processed" INTEGER DEFAULT 0
+);
+CREATE TABLE "uploads-data" (
+    "id" INTEGER,
+    "data" BLOB
+);
+COMMIT;
