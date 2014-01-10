@@ -15,13 +15,14 @@ class GeigalyseDatabse {
   private $addUploadDataStmt = null;
   function addUploadToDatabase($uploader, $data) {
     if($this->addUploadMetadataStmt == null)
-      $this->addUploadMetadataStmt = $this->uploadsdb->prepare('INSERT INTO uploads (uploader) VALUES (:uploader)');
+      $this->addUploadMetadataStmt = $this->uploadsdb->prepare('INSERT INTO uploads (uploader, uploadtime) VALUES (:uploader, :uploadtime)');
     if($this->addUploadDataStmt == null)
       $this->addUploadDataStmt = $this->uploadsdb->prepare('INSERT INTO uploadsdata (id, data) VALUES (:id, :data)');
 
     $this->beginTransaction();
 
     $this->addUploadMetadataStmt->bindParam (':uploader', $uploader, SQLITE3_INTEGER);
+    $this->addUploadMetadataStmt->bindValue(':uploadtime', time(), SQLITE3_INTEGER);
     $this->addUploadMetadataStmt->execute();
 
     $this->addUploadDataStmt->bindValue(':id', $this->uploadsdb->lastInsertRowID(), SQLITE3_INTEGER);
