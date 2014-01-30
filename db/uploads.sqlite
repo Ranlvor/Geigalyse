@@ -7,7 +7,7 @@ CREATE TABLE "uploads" (
     "processed" INTEGER DEFAULT 0
 );
 CREATE TABLE "uploadsdata" (
-    "id" INTEGER,
+    "id" INTEGER PRIMARY KEY,
     "data" BLOB
 );
 COMMIT;
