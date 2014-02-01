@@ -32,6 +32,19 @@ class GeigalyseDatabse {
     $this->commitTransaction();
   }
 
+  private $addUploadDataGetStmt = null;
+  function addGetUploadToDatabase($uploader, $timestamp, $count){
+    if($this->addUploadDataGetStmt == null)
+      $this->addUploadDataGetStmt = $this->uploadsdb->prepare('INSERT INTO uploadsGet (uploader, uploadtime, timestamp, count) VALUES (:uploader, :uploadtime, :timestamp, :count)');
+
+    $this->addUploadDataGetStmt->bindParam(':uploader', $uploader, SQLITE3_INTEGER);
+    $this->addUploadDataGetStmt->bindValue(':uploadtime', time(), SQLITE3_INTEGER);
+    $this->addUploadDataGetStmt->bindParam(':timestamp', $timestamp, SQLITE3_BLOB);
+    $this->addUploadDataGetStmt->bindParam(':count', $count, SQLITE3_BLOB);
+
+    $this->addUploadDataGetStmt->execute();
+  }
+
   private function beginTransaction() {
     $this->beginTransactionStmt->execute();
   }
