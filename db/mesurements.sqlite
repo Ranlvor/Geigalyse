@@ -1,0 +1,9 @@
+PRAGMA foreign_keys=OFF;
+BEGIN TRANSACTION;
+CREATE TABLE "mesurements" (
+    "source" INTEGER,
+    "timestamp" INTEGER,
+    "count" INTEGER
+);
+CREATE UNIQUE INDEX "mesurementssourcetimestamp" on mesurements (source ASC, timestamp ASC);
+COMMIT;
