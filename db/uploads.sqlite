@@ -6,8 +6,18 @@ CREATE TABLE "uploads" (
     "uploadtime" INTEGER,
     "processed" INTEGER DEFAULT 0
 );
-CREATE TABLE "uploadsdata" (
+CREATE TABLE uploadsdata (
     "id" INTEGER,
     "data" BLOB
 );
+CREATE TABLE "uploadsGet" (
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "uploader" INTEGER,
+    "uploadtime" INTEGER,
+    "timestamp" INTEGER,
+    "count" INTEGER,
+    "processed" INTEGER DEFAULT (0)
+);
+DELETE FROM sqlite_sequence;
+INSERT INTO "sqlite_sequence" VALUES('uploads',12);
 COMMIT;
