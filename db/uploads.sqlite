@@ -6,8 +6,9 @@ CREATE TABLE "uploads" (
     "uploadtime" INTEGER,
     "processed" INTEGER DEFAULT 0
 );
-CREATE TABLE uploadsdata (
-    "id" INTEGER,
+
+CREATE TABLE "uploadsdata" (
+    "id" INTEGER PRIMARY KEY,
     "data" BLOB
 );
 CREATE TABLE "uploadsGet" (

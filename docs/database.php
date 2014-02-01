@@ -22,7 +22,7 @@ class GeigalyseDatabse {
     $this->beginTransaction();
 
     $this->addUploadMetadataStmt->bindParam (':uploader', $uploader, SQLITE3_INTEGER);
-    $this->addUploadDataStmt->bindValue(':uploadtime', time(), SQLITE3_INTEGER);
+    $this->addUploadMetadataStmt->bindValue(':uploadtime', time(), SQLITE3_INTEGER);
     $this->addUploadMetadataStmt->execute();
 
     $this->addUploadDataStmt->bindValue(':id', $this->uploadsdb->lastInsertRowID(), SQLITE3_INTEGER);
