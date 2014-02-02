@@ -62,18 +62,6 @@ class GeigalyseDatabse {
     $this->commitTransaction();
   }
 
-  private $updateMesurementStmt = null;
-  function updateMesurement($source, $timestamp, $count){
-    if($this->updateMesurement == null)
-      $this->updateMesurement = $this->sql->prepare('INSERT INTO OR REPLACE mesurements (source, timestamp, count) VALUES (:source, :timestamp, :count)');
-
-    $this->updateMesurement->bindParam(':uploader', $source, SQLITE3_INTEGER);
-    $this->updateMesurement->bindParam(':timestamp', $timestamp, SQLITE3_INTEGER);
-    $this->updateMesurement->bindParam(':count', $count, SQLITE3_INTEGER);
-
-    $this->updateMesurement->execute();
-  }
-
   private function beginTransaction() {
     $this->beginTransactionStmt->execute();
   }
