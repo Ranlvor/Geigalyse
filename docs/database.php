@@ -52,8 +52,8 @@ class GeigalyseDatabse {
 
   function processUnprocessedGetUploads(){
     $this->beginTransaction();
-    $this->sql->exec("INSERT OR REPLACE INTO mesurements -- source, timestamp, count
-                      SELECT uploader, hexdec(timestamp), hexdec(count)
+    $this->sql->exec("INSERT OR REPLACE INTO mesurements.mesurements -- source, timestamp, count
+                      SELECT uploader, hexdec(timestamp), hexdec(count), 0
                       FROM uploadsGet
                       WHERE processed = 0;");
     $this->sql->exec("UPDATE uploadsGet
