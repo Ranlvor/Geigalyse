@@ -1,0 +1,9 @@
+PRAGMA foreign_keys=OFF;
+BEGIN TRANSACTION;
+CREATE TABLE "processedMesurements" (
+    "source" INTEGER,
+    "timestamp" INTEGER,
+    "mysvph" REAL
+);
+CREATE UNIQUE INDEX "procesMesuSourceTimestamp" on processedmesurements (source ASC, timestamp ASC);
+COMMIT;

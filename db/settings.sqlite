@@ -1,0 +1,12 @@
+PRAGMA foreign_keys=OFF;
+BEGIN TRANSACTION;
+CREATE TABLE tubes (
+    "id" INTEGER,
+    "name" TEXT,
+    "deadtimeS" REAL,
+    "cpm-per-mysvph" REAL
+);
+INSERT INTO "tubes" VALUES(1,'Testing with dummydata',0.0,1.0);
+INSERT INTO "tubes" VALUES(2,'SI39G',0.0,34.0);
+INSERT INTO "tubes" VALUES(3,'SI-180G (СИ-180Г)',0.0,321.0);
+COMMIT;

@@ -4,6 +4,6 @@ CREATE TABLE "mesurements" (
     "source" INTEGER,
     "timestamp" INTEGER,
     "count" INTEGER
-);
+, "processed" INTEGER DEFAULT (0));
 CREATE UNIQUE INDEX "mesurementssourcetimestamp" on mesurements (source ASC, timestamp ASC);
 COMMIT;
