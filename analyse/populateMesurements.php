@@ -1,3 +1,3 @@
 <?php
-include("database.php");
+include("../docs/database.php");
 $db->processUnprocessedGetUploads();
