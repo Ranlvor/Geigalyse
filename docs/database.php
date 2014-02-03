@@ -11,6 +11,10 @@ class GeigalyseDatabse {
   function GeigalyseDatabse() {
     $this->sql = new SQLite3('../db/uploads.db');
     $this->sql->exec("ATTACH DATABASE '../db/mesurements.db' AS mesurements");
+    $this->sql->exec("ATTACH DATABASE '../db/settings.db' AS settings");
+    $this->sql->exec("ATTACH DATABASE '../db/results.db' AS results");
+
+
     $this->beginTransactionStmt = $this->sql->prepare('BEGIN TRANSACTION;');
     $this->commitTransactionStmt = $this->sql->prepare('COMMIT;');
     $this->sql->createFunction('hexdec', 'sqliteHexdec', 1);
@@ -59,6 +63,33 @@ class GeigalyseDatabse {
     $this->sql->exec("UPDATE uploadsGet
                       SET processed = 1
                       WHERE processed = 0;");
+    $this->commitTransaction();
+  }
+
+  function processUnprocessedMesurements(){
+    $this->beginTransaction();
+
+    $this->sql->exec("INSERT OR REPLACE INTO results.processedmesurements
+                      SELECT source, timestamp, 
+                      (1+(count* --eliminate deadtime
+
+                          (SELECT `deadtimeS`
+                           FROM settings.tubes
+                           WHERE id = source)
+
+                        )/60)*count --eliminate deadtime end
+
+
+                        / (SELECT `cpm-per-mysvph` --convert to µSv/h
+                           FROM settings.tubes
+                           WHERE id = source)
+                      FROM mesurements.mesurements
+                      WHERE processed = 0;");
+
+    $this->sql->exec("UPDATE mesurements.mesurements
+                      SET processed = 1
+                      WHERE processed = 0;");
+
     $this->commitTransaction();
   }
 
