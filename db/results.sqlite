@@ -6,4 +6,5 @@ CREATE TABLE "processedMesurements" (
     "mysvph" REAL
 );
 CREATE UNIQUE INDEX "procesMesuSourceTimestamp" on processedmesurements (source ASC, timestamp ASC);
+CREATE INDEX "processedmesuretimestamp" on processedmesurements (timestamp ASC);
 COMMIT;
