@@ -115,6 +115,20 @@ class GeigalyseDatabse {
     return $this->getLatestProcessedMesurementsSlidingAverageStmt->execute();
   }
 
+  function applyBadTimestampTimes() {
+    $this->sql->exec('
+      DELETE FROM processedmesurements
+        WHERE timestamp IN (
+          SELECT pm.timestamp
+          FROM        baddata
+            LEFT JOIN processedmesurements AS pm
+                    ON baddata.source = pm.source
+                  AND baddata.begin <= pm.timestamp
+                  AND baddata.end   >= pm.timestamp
+        )
+     ');
+  }
+
   private function beginTransaction() {
     $this->beginTransactionStmt->execute();
   }
