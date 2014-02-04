@@ -98,12 +98,10 @@ class GeigalyseDatabse {
     if($this->getLatestProcessedMesurementsSlidingAverageStmt  == null) {
       $this->sql->exec("ATTACH DATABASE ':memory:' AS aux1;");
       $this->sql->exec('CREATE TABLE aux1."processedMesurements" (
-            "source" INTEGER,
-            "timestamp" INTEGER,
+            "timestamp" INTEGER PRIMARY KEY,
             "mysvph" REAL
         );');
-      $this->sql->exec('CREATE INDEX aux1."processedmesuretimestamp" on processedmesurements (timestamp ASC);');
-      $this->sql->exec('INSERT INTO aux1."processedMesurements" SELECT * FROM processedMesurements ORDER BY timestamp DESC LIMIT 2000;');
+      $this->sql->exec('INSERT INTO aux1."processedMesurements" SELECT timestamp, mysvph FROM processedMesurements ORDER BY timestamp DESC LIMIT 2000;');
       $this->getLatestProcessedMesurementsSlidingAverageStmt = $this->sql->prepare('
         SELECT timestamp, (
                             SELECT AVG(mysvph)
