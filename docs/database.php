@@ -95,19 +95,28 @@ class GeigalyseDatabse {
 
   private $getLatestProcessedMesurementsSlidingAverageStmt = null;
   function getLatestProcessedMesurementsSlidingAverage($count, $window) {
-    if($this->getLatestProcessedMesurementsSlidingAverageStmt  == null)
+    if($this->getLatestProcessedMesurementsSlidingAverageStmt  == null) {
+      $this->sql->exec("ATTACH DATABASE ':memory:' AS aux1;");
+      $this->sql->exec('CREATE TABLE aux1."processedMesurements" (
+            "source" INTEGER,
+            "timestamp" INTEGER,
+            "mysvph" REAL
+        );');
+      $this->sql->exec('CREATE INDEX aux1."processedmesuretimestamp" on processedmesurements (timestamp ASC);');
+      $this->sql->exec('INSERT INTO aux1."processedMesurements" SELECT * FROM processedMesurements ORDER BY timestamp DESC LIMIT 2000;');
       $this->getLatestProcessedMesurementsSlidingAverageStmt = $this->sql->prepare('
         SELECT timestamp, (
                             SELECT AVG(mysvph)
-                            FROM processedmesurements AS innerPM
+                            FROM aux1.processedmesurements AS innerPM
                             WHERE innerPM.timestamp >= outerPM.timestamp - :window
                               AND innerPM.timestamp <= outerPM.timestamp + :window
                           ) AS slidingAVG
 
-        FROM processedmesurements AS outerPM
+        FROM aux1.processedmesurements AS outerPM
         ORDER BY timestamp DESC
         LIMIT :count;
       ');
+    }
 
     $this->getLatestProcessedMesurementsSlidingAverageStmt->bindParam(':window', $window, SQLITE3_INTEGER);
     $this->getLatestProcessedMesurementsSlidingAverageStmt->bindParam(':count', $count, SQLITE3_INTEGER);
