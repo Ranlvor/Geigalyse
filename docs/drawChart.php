@@ -10,7 +10,7 @@ $windows = array(
   array('text' => 'average +- 5 min', 'size' => 300),
   array('text' => 'average +- 60 min', 'size' => 3600)
 );
-$timeString = "m.d.y H:i";
+$timeString = "d.m.y H:i";
 
  /* pChart library inclusions */
  include("$pChartPath/class/pData.class.php");
@@ -28,7 +28,7 @@ $timeString = "m.d.y H:i";
     $data[$line['timestamp']][$i] = $line['slidingAVG'];
   $result->finalize();
  }
- 
+ $data = array_reverse($data, true);
  //print_r($data);
  foreach($data AS $timestamp => $row)
   {
