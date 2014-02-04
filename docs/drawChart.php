@@ -28,6 +28,8 @@ $timeString = "d.m.y H:i";
     $data[$line['timestamp']][$i] = $line['slidingAVG'];
   $result->finalize();
  }
+ $firstTimestamp = array_keys($data)[0] - 2208988800;
+
  $data = array_reverse($data, true);
  //print_r($data);
  foreach($data AS $timestamp => $row)
@@ -70,7 +72,6 @@ $timeString = "d.m.y H:i";
 // $myPicture->setFontProperties(array("FontName"=>"$pChartPath/fonts/pf_arma_five.ttf","FontSize"=>11));
  $myPicture->setFontProperties(array("FontName"=>"$pChartPath/fonts/calibri.ttf","FontSize"=>11));
 
- $firstTimestamp = array_keys($data)[0] - 2208988800;
  $timeString = date($timeString,$firstTimestamp);
  $myPicture->drawText(150,25,"Radiation $timeString",array("FontSize"=>20,"Align"=>TEXT_ALIGN_BOTTOMMIDDLE));
 
