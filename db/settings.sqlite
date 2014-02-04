@@ -9,4 +9,13 @@ CREATE TABLE tubes (
 INSERT INTO "tubes" VALUES(1,'Testing with dummydata',0.0,1.0);
 INSERT INTO "tubes" VALUES(2,'SI39G',0.0,34.0);
 INSERT INTO "tubes" VALUES(3,'SI-180G (СИ-180Г)',0.0,321.0);
+ANALYZE sqlite_master;
+INSERT INTO "sqlite_stat1" VALUES('tubes','tubesCovering','3 1 1 1');
+CREATE TABLE "badData" (
+    "source" INTEGER,
+    "begin" INTEGER,
+    "end" INTEGER
+);
+INSERT INTO "badData" VALUES(3,3600450000,3600451200);
+CREATE UNIQUE INDEX "tubesCovering" on tubes (id ASC, deadtimeS ASC, "cpm-per-mysvph" ASC);
 COMMIT;
