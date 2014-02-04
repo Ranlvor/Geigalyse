@@ -93,6 +93,28 @@ class GeigalyseDatabse {
     $this->commitTransaction();
   }
 
+  private $getLatestProcessedMesurementsSlidingAverageStmt = null;
+  function getLatestProcessedMesurementsSlidingAverage($count, $window) {
+    if($this->getLatestProcessedMesurementsSlidingAverageStmt  == null)
+      $this->getLatestProcessedMesurementsSlidingAverageStmt = $this->sql->prepare('
+        SELECT timestamp, (
+                            SELECT AVG(mysvph)
+                            FROM processedmesurements AS innerPM
+                            WHERE innerPM.timestamp >= outerPM.timestamp - :window
+                              AND innerPM.timestamp <= outerPM.timestamp + :window
+                          ) AS slidingAVG
+
+        FROM processedmesurements AS outerPM
+        ORDER BY timestamp DESC
+        LIMIT :count;
+      ');
+
+    $this->getLatestProcessedMesurementsSlidingAverageStmt->bindParam(':window', $window, SQLITE3_INTEGER);
+    $this->getLatestProcessedMesurementsSlidingAverageStmt->bindParam(':count', $count, SQLITE3_INTEGER);
+
+    return $this->getLatestProcessedMesurementsSlidingAverageStmt->execute();
+  }
+
   private function beginTransaction() {
     $this->beginTransactionStmt->execute();
   }
