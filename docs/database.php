@@ -136,6 +136,24 @@ class GeigalyseDatabse {
      ');
   }
 
+  private $getLatestMesurementExtendetStmt = null;
+  function getLatestMesurementExtendet() {
+    if($this->getLatestMesurementExtendetStmt == null)
+      $this->getLatestMesurementExtendetStmt = $this->sql->prepare('
+        SELECT pm.source, pm.timestamp, pm.mysvph, tubes.name, tubes.deadtimeS, tubes."cpm-per-mysvph", mesurements.count
+        FROM processedMesurements AS pm
+        LEFT JOIN tubes ON pm.source = tubes.id
+        LEFT JOIN mesurements ON mesurements.timestamp = pm.timestamp
+        ORDER BY pm.timestamp DESC
+        LIMIT 1;
+      ');
+    
+    $result = $this->getLatestMesurementExtendetStmt->execute();
+    $resultArray = $result->fetchArray();
+    $result->finalize();
+    return $resultArray;
+  }
+
   private function beginTransaction() {
     $this->beginTransactionStmt->execute();
   }
