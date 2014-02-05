@@ -16,7 +16,7 @@ $timeString = "d.m.y H:i";
  include("$pChartPath/class/pData.class.php");
  include("$pChartPath/class/pDraw.class.php");
  include("$pChartPath/class/pImage.class.php");
- include("database.php");
+ include("../analyse/populateMesurements.php");
 
  /* Create and populate the pData object */
  $MyData = new pData();
