@@ -19,11 +19,11 @@ $table['Used counts/minute to µSv/h-divisor'] = $array['cpm-per-mysvph']. " (co
 $table['Used deadtime'] = $array['deadtimeS'].' s';
 
 $average = $db->getLatestProcessedMesurementsSlidingAverage(1,5*60);
-$table['5 minute average'] = $average->fetchArray()['slidingAVG'];
+$table['5 minute average'] = $average->fetchArray()['slidingAVG']." µSv/h";
 $average->finalize();
 
 $average = $db->getLatestProcessedMesurementsSlidingAverage(1,60*60);
-$table['60 minute average'] = $average->fetchArray()['slidingAVG'];
+$table['60 minute average'] = $average->fetchArray()['slidingAVG']." µSv/h";
 $average->finalize();
 
 foreach($table as $key => $value) {
