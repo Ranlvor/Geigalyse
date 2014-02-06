@@ -5,6 +5,33 @@ CREATE TABLE "processedMesurements" (
     "timestamp" INTEGER,
     "mysvph" REAL
 );
+
+CREATE TABLE slidingaveragecache (
+    "timestamp" INTEGER,
+    "window" INTEGER,
+    "lastIncludedTimestamp" INTEGER,
+    "value" REAL
+);
 CREATE UNIQUE INDEX "procesMesuSourceTimestamp" on processedmesurements (source ASC, timestamp ASC);
 CREATE INDEX "processedmesuretimestamp" on processedmesurements (timestamp ASC);
+CREATE INDEX "slidingaveragecacheLastInclude" on slidingaveragecache (lastIncludedTimestamp ASC);
+CREATE UNIQUE INDEX "slidingaveragecachecovering" on slidingaveragecache (window ASC, timestamp ASC, value ASC);
+CREATE TRIGGER invalidateCache
+AFTER INSERT ON processedmesurements
+FOR EACH ROW
+BEGIN
+  DELETE
+  FROM slidingaveragecache
+  WHERE lastIncludedTimestamp >= new.timestamp;
+END;
+CREATE TRIGGER cacheCalculateLastIncludedTimestamp
+AFTER INSERT ON slidingaveragecache
+FOR EACH ROW
+WHEN lastIncludedTimestamp IS NULL
+BEGIN
+  UPDATE slidingaveragecache
+  SET lastIncludedTimestamp = new.timestamp + new.window
+  WHERE timestamp = new.timestamp
+    AND window = new.window;
+END;
 COMMIT;
