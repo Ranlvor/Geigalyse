@@ -6,7 +6,7 @@
 
 $pChartPath = "../pChart2.1.4";
 $windows = array(
-  array('text' => 'raw data', 'size' => 0),
+  array('text' => '1 min sampling interval', 'size' => 0),
   array('text' => 'average +- 5 min', 'size' => 300),
   array('text' => 'average +- 60 min', 'size' => 3600)
 );
