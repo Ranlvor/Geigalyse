@@ -95,22 +95,12 @@ class GeigalyseDatabse {
 
   private $getLatestProcessedMesurementsSlidingAverageStmt = null;
   function getLatestProcessedMesurementsSlidingAverage($count, $window) {
+    $this->populateSlidingAverageCache($count, $window);
     if($this->getLatestProcessedMesurementsSlidingAverageStmt  == null) {
-      $this->sql->exec("ATTACH DATABASE ':memory:' AS aux1;");
-      $this->sql->exec('CREATE TABLE aux1."processedMesurements" (
-            "timestamp" INTEGER PRIMARY KEY,
-            "mysvph" REAL
-        );');
-      $this->sql->exec('INSERT INTO aux1."processedMesurements" SELECT timestamp, mysvph FROM processedMesurements ORDER BY timestamp DESC LIMIT 10140;');
       $this->getLatestProcessedMesurementsSlidingAverageStmt = $this->sql->prepare('
-        SELECT timestamp, (
-                            SELECT AVG(mysvph)
-                            FROM aux1.processedmesurements AS innerPM
-                            WHERE innerPM.timestamp >= outerPM.timestamp - :window
-                              AND innerPM.timestamp <= outerPM.timestamp + :window
-                          ) AS slidingAVG
-
-        FROM aux1.processedmesurements AS outerPM
+        SELECT timestamp, value AS slidingAVG
+        FROM slidingaveragecache
+        WHERE window = :window
         ORDER BY timestamp DESC
         LIMIT :count;
       ');
@@ -120,6 +110,38 @@ class GeigalyseDatabse {
     $this->getLatestProcessedMesurementsSlidingAverageStmt->bindParam(':count', $count, SQLITE3_INTEGER);
 
     return $this->getLatestProcessedMesurementsSlidingAverageStmt->execute();
+  }
+
+  private $populateSlidingAverageCacheStmt = null;
+  function populateSlidingAverageCache($count, $window) {
+    if($this->populateSlidingAverageCacheStmt == null) {
+      $this->populateSlidingAverageCacheStmt = $this->sql->prepare('
+        INSERT INTO slidingaveragecache
+        SELECT timestamp, :window AS window, NULL AS lastIncludedTimestamp, (
+                                    SELECT AVG(mysvph)
+                                    FROM processedmesurements AS innerPM
+                                    WHERE innerPM.timestamp >= outerPM.timestamp - :window
+                                      AND innerPM.timestamp <= outerPM.timestamp + :window
+                                  ) AS value
+
+        FROM processedmesurements AS outerPM
+
+        WHERE timestamp IN (
+          SELECT pm.timestamp
+          FROM processedmesurements AS pm
+          LEFT JOIN slidingaveragecache AS sac
+                ON (pm.timestamp = sac.timestamp) AND (sac.window = :window)
+          WHERE sac.timestamp IS NULL
+          ORDER BY pm.timestamp DESC
+          LIMIT :count
+        )
+      ');
+    }
+
+    $this->populateSlidingAverageCacheStmt->bindParam(':window', $window, SQLITE3_INTEGER);
+    $this->populateSlidingAverageCacheStmt->bindParam(':count', $count, SQLITE3_INTEGER);
+
+    $this->populateSlidingAverageCacheStmt->execute();
   }
 
   function applyBadTimestampTimes() {
