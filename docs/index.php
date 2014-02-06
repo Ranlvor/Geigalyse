@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Geigercounter-Status</h1>
-<h2>Latest Mesurement</h2>
+<h2>Latest Measurement</h2>
 <table>
 <?php
 include("../analyse/populateMesurements.php");
