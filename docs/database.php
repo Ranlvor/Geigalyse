@@ -101,7 +101,7 @@ class GeigalyseDatabse {
             "timestamp" INTEGER PRIMARY KEY,
             "mysvph" REAL
         );');
-      $this->sql->exec('INSERT INTO aux1."processedMesurements" SELECT timestamp, mysvph FROM processedMesurements ORDER BY timestamp DESC LIMIT 2000;');
+      $this->sql->exec('INSERT INTO aux1."processedMesurements" SELECT timestamp, mysvph FROM processedMesurements ORDER BY timestamp DESC LIMIT 10140;');
       $this->getLatestProcessedMesurementsSlidingAverageStmt = $this->sql->prepare('
         SELECT timestamp, (
                             SELECT AVG(mysvph)
