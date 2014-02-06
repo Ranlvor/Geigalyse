@@ -5,6 +5,7 @@ mkfifo window-0.csv
 {
 sqlite3 ../db/results.db <<EOF
 
+.timeout 60000
 .output window-0.csv
 SELECT timestamp - 2208988800, mysvph AS slidingAVG
 FROM processedMesurements

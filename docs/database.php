@@ -10,6 +10,7 @@ class GeigalyseDatabse {
 
   function GeigalyseDatabse() {
     $this->sql = new SQLite3('../db/uploads.db');
+    $this->sql->busyTimeout(60000);
     $this->sql->exec("ATTACH DATABASE '../db/mesurements.db' AS mesurements");
     $this->sql->exec("ATTACH DATABASE '../db/settings.db' AS settings");
     $this->sql->exec("ATTACH DATABASE '../db/results.db' AS results");
