@@ -6,9 +6,8 @@ mkfifo window-0.csv
 sqlite3 ../db/results.db <<EOF
 
 .output window-0.csv
-SELECT timestamp - 2208988800, value AS slidingAVG
-FROM slidingaveragecache
-WHERE window = 0
+SELECT timestamp - 2208988800, mysvph AS slidingAVG
+FROM processedMesurements
 ORDER BY timestamp DESC
 LIMIT 10080;
 
@@ -32,7 +31,7 @@ EOF
 gnuplot <<EOF
 
 set terminal pngcairo dashed
-set output "weekly.png"
+set output
 set term pngcairo size 700,230
 set datafile separator "|"
 set xdata time
