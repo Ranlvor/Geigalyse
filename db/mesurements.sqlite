@@ -7,4 +7,5 @@ CREATE TABLE "mesurements" (
 , "processed" INTEGER DEFAULT (0));
 CREATE UNIQUE INDEX "mesurementssourcetimestamp" on mesurements (source ASC, timestamp ASC);
 CREATE INDEX "mesurementtimestamp" on mesurements (timestamp ASC);
+CREATE INDEX "mesurementprocessed" on mesurements (processed ASC)
 COMMIT;
