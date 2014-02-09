@@ -38,7 +38,7 @@ $pChartPath = "../pChart2.1.4";
  $MyData->setAxisName(1,"TimeStamp");
 
  function axisFormator($value) {
-   return "$value µS/h";
+   return "$value µSv/h";
  }
  $MyData->setAxisDisplay(0,AXIS_FORMAT_CUSTOM, "axisFormator");
 
