@@ -33,7 +33,7 @@ gnuplot <<EOF
 
 set terminal pngcairo dashed
 set output
-set term pngcairo size 700,230
+set term pngcairo size 700,280
 set datafile separator "|"
 set xdata time
 set xlabel "Time"
@@ -41,6 +41,7 @@ set ylabel "Radiation\nµSv/h"
 set timefmt "%s"
 set format x "%d.%m."
 set xtics rotate
+set nokey
 
 set style line 1 lc rgb "red" ps 0.1 pt 1
 set style line 2 lc rgb "green" ps 0.1
