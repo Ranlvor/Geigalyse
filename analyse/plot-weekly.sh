@@ -37,14 +37,14 @@ set term pngcairo size 700,230
 set datafile separator "|"
 set xdata time
 set xlabel "Time"
-set ylabel "Radiation\nµS/h"
-set timefmt "%s" 
+set ylabel "Radiation\nµSv/h"
+set timefmt "%s"
 set format x "%d.%m."
 set xtics rotate
 
-set style line 1 lc rgb "red"
-set style line 2 lc rgb "green"
-set style line 3 lc rgb "blue"
+set style line 1 lc rgb "red" ps 0.1 pt 1
+set style line 2 lc rgb "green" ps 0.1
+set style line 3 lc rgb "blue" ps 0.1
 
 plot "window-0.csv"  using 1:2 title "1 minute sampling interval"  ls 3, \
     "window-300.csv"  using 1:2 title "average +- 5 min"  ls 2, \
