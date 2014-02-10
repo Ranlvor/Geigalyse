@@ -20,11 +20,12 @@ foreach($table as $key => $value) {
 <h2>Older Data</h2>
 <img src="drawChart.php" /><br>
 <!--<img src="drawChart-week.php" /><br>-->
-<img src="drawChart-week-gnuplot.php" />
+<img src="drawChart-week-gnuplot.php" /><br>
+<img src="drawChart-month-gnuplot.php" />
 
 <h2>Disclaimer</h2>
 This is a hobby project. It is nice if it is useful for anyone. You are free to use the data and plots as you like. We can not give any warranty for accuracy or correctness of the data, we are not even sure if we understand the
-datasheet of our tube correctly. If you like you can take a look at <a href="https://github.com/keine-ahnung/Geigalyze">our code at GitHub</a>
+datasheet of our tube correctly. If you like you can take a look at <a href="https://github.com/keine-ahnung/Geigalyze">our code at GitHub</a>.
 <!-- Piwik -->
 <script type="text/javascript">
   var _paq = _paq || [];
