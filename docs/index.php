@@ -10,21 +10,7 @@
 <table>
 <?php
 include("../analyse/populateMesurements.php");
-$array = $db->getLatestMesurementExtendet();
-$table['Timestamp'] = date("d.m.y H:i:s", $array['timestamp'] - 2208988800);
-$table['Counts in the previous 60 seconds'] = $array['count'];
-$table['Calculated radiation'] = $array['mysvph']." µSv/h";
-$table['Used Geiger tube'] = $array['name'];
-$table['Used counts/minute to µSv/h-divisor'] = $array['cpm-per-mysvph']. " (counts/minute)/(µSv/h)";
-$table['Used deadtime'] = $array['deadtimeS'].' s';
-
-$average = $db->getLatestProcessedMesurementsSlidingAverage(1,5*60);
-$table['5 minute average'] = $average->fetchArray()['slidingAVG']." µSv/h";
-$average->finalize();
-
-$average = $db->getLatestProcessedMesurementsSlidingAverage(1,60*60);
-$table['60 minute average'] = $average->fetchArray()['slidingAVG']." µSv/h";
-$average->finalize();
+include("generate-latest-mesurement-array.php");
 
 foreach($table as $key => $value) {
   echo "<tr><td>$key</td><td>$value</td></tr>\n";
@@ -35,6 +21,10 @@ foreach($table as $key => $value) {
 <img src="drawChart.php" /><br>
 <!--<img src="drawChart-week.php" /><br>-->
 <img src="drawChart-week-gnuplot.php" />
+
+<h2>Disclaimer</h2>
+This is a hobby-project. It is nice if it is usefull for anybody. You are free to use the data and plots as you like. We can not give any warranty for accuracy or correctness of the data, we are not even sure if we understand the
+datasheet of our tube correctly. If you like you can take a look at <a href="https://github.com/keine-ahnung/Geigalyze">our code at GitHub</a>
 <!-- Piwik -->
 <script type="text/javascript">
   var _paq = _paq || [];

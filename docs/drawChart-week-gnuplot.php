@@ -4,4 +4,21 @@ header("Content-Type: image/png");
 include("../analyse/populateMesurements.php");
 $db->populateSlidingAverageCache(1440*7, 3600);
 $db->populateSlidingAverageCache(1440*7, 300);
-passthru ("../analyse/plot-weekly.sh");
+$handle = popen ("../analyse/plot-weekly.sh", "r");
+$img = new Imagick();
+$img->readImageFile($handle);
+pclose($handle);
+
+include("generate-latest-mesurement-array.php");
+
+$comment = 'Latest Data available at http://geigalyse.starletp9.de/'."\n";
+$comment .= "\n";
+$comment .= "Information about latest measurement:\n";
+
+foreach($table as $key => $value) {
+  $comment .= "$key: $value\n";
+}
+
+
+$img->commentImage($comment);
+echo $img;
