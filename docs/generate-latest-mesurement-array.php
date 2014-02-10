@@ -1,6 +1,6 @@
 <?php
 $array = $db->getLatestMesurementExtendet();
-$table['Timestamp'] = date("d.m.y H:i:s", $array['timestamp'] - 2208988800);
+$table['Timestamp'] = date("d.m.Y H:i:s", $array['timestamp'] - 2208988800);
 $table['Counts in the previous 60 seconds'] = $array['count'];
 $table['Calculated radiation'] = $array['mysvph']." µSv/h";
 $table['Used Geiger tube'] = $array['name'];

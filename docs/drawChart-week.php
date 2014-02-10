@@ -5,7 +5,7 @@ $windows = array(
   array('text' => 'average +- 5 min', 'size' => 300),
   array('text' => 'average +- 60 min', 'size' => 3600)
 );
-$timeString = "d.m.y H:i";
+$timeString = "d.m.Y H:i";
 $timestampFormat = "day";
 $points = 1440*7;
 include("drawChart-common.php");
