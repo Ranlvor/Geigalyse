@@ -44,7 +44,7 @@ set xtics rotate
 set yrange [0:]
 set tmargin 2
 set bmargin 5
-%I do not know how and why the following line works, it is adapted from https://stackoverflow.com/questions/10834037/gnuplot-adjust-size-of-key-legend
+#I do not know how and why the following line works, it is adapted from https://stackoverflow.com/questions/10834037/gnuplot-adjust-size-of-key-legend
 set key above width -11 vertical maxrows 1
 
 set style line 1 lc rgb "red" ps 0.1 pt 1
