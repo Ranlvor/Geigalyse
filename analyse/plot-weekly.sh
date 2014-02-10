@@ -41,15 +41,22 @@ set ylabel "Radiation\nµSv/h"
 set timefmt "%s"
 set format x "%d.%m."
 set xtics rotate
-set nokey
+set yrange [0:]
+set tmargin 2
+set bmargin 5
+%I do not know how and why the following line works, it is adapted from https://stackoverflow.com/questions/10834037/gnuplot-adjust-size-of-key-legend
+set key above width -11 vertical maxrows 1
 
 set style line 1 lc rgb "red" ps 0.1 pt 1
 set style line 2 lc rgb "green" ps 0.1
 set style line 3 lc rgb "blue" ps 0.1
 
-plot "window-0.csv"  using 1:2 title "1 minute sampling interval"  ls 3, \
-    "window-300.csv"  using 1:2 title "average +- 5 min"  ls 2, \
-    "window-3600.csv" using 1:2 title "average +- 60 min" ls 1
+plot "window-0.csv"  using 1:2 notitle  ls 3, \
+    "window-300.csv"  using 1:2 notitle ls 2, \
+    "window-3600.csv" using 1:2 ls 1 notitle, \
+    0/0 title "1 minute sampling interval" with points ls 3 ps 1, \
+    0/0 title "average +- 5 min"  with points ls 2 ps 1, \
+    0/0 title "average +- 60 min" with points ls 1 ps 1
 
 EOF
 
