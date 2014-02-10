@@ -23,7 +23,7 @@ foreach($table as $key => $value) {
 <img src="drawChart-week-gnuplot.php" />
 
 <h2>Disclaimer</h2>
-This is a hobby-project. It is nice if it is usefull for anybody. You are free to use the data and plots as you like. We can not give any warranty for accuracy or correctness of the data, we are not even sure if we understand the
+This is a hobby project. It is nice if it is useful for anyone. You are free to use the data and plots as you like. We can not give any warranty for accuracy or correctness of the data, we are not even sure if we understand the
 datasheet of our tube correctly. If you like you can take a look at <a href="https://github.com/keine-ahnung/Geigalyze">our code at GitHub</a>
 <!-- Piwik -->
 <script type="text/javascript">
