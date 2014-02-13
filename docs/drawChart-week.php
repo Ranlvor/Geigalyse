@@ -8,4 +8,4 @@ $windows = array(
 $timeString = "d.m.Y H:i";
 $timestampFormat = "day";
 $points = 1440*7;
-include("drawChart-common.php");
+require_once("drawChart-common.php");

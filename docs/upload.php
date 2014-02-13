@@ -5,7 +5,7 @@ if($_GET['key'] != 'toTri7WnjrNoQeNi5kUssW')
 $postdata = file_get_contents("php://input");
 //$postdata = file_get_contents("php://stdin");
 
-include("database.php");
+require_once("database.php");
 $db->addUploadToDatabase($_GET['id'], $postdata);
 
 if(strlen($postdata) == 0) {
@@ -15,4 +15,4 @@ if(strlen($postdata) == 0) {
 } else {
 	echo "Upload seems legit";
 }
-include("../analyse/populateMesurements.php");
+require_once("../analyse/populateMesurements.php");

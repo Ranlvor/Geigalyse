@@ -9,8 +9,8 @@
 <h2>Latest Measurement</h2>
 <table>
 <?php
-include("database.php");
-include("generate-latest-mesurement-array.php");
+require_once("database.php");
+require_once("generate-latest-mesurement-array.php");
 
 foreach($table as $key => $value) {
   echo "<tr><td>$key</td><td>$value</td></tr>\n";

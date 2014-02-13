@@ -2,10 +2,10 @@
 $pChartPath = "../pChart2.1.4";
 
  /* pChart library inclusions */
- include("$pChartPath/class/pData.class.php");
- include("$pChartPath/class/pDraw.class.php");
- include("$pChartPath/class/pImage.class.php");
- include("database.php");
+ require_once("$pChartPath/class/pData.class.php");
+ require_once("$pChartPath/class/pDraw.class.php");
+ require_once("$pChartPath/class/pImage.class.php");
+ require_once("database.php");
 
  /* Create and populate the pData object */
  $MyData = new pData();
