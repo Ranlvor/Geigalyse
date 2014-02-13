@@ -41,6 +41,8 @@ EOS
 cat <<EOS
 BEGIN TRANSACTION;
 
+.timeout 60000
+
 .output window-0-$$.csv
 SELECT timestamp - 2208988800, mysvph AS slidingAVG
 FROM processedMesurements
