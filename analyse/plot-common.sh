@@ -80,6 +80,8 @@ set style line 1 lc rgb "red" ps 0.1 pt 1
 set style line 2 lc rgb "green" ps 0.1
 set style line 3 lc rgb "blue" ps 0.1
 
+set grid xtics ytics mxtics mytics
+
 plot "window-0-$$.csv"  using 1:2 notitle  ls 3, \
     "window-300-$$.csv"  using 1:2 notitle ls 2, \
     "window-3600-$$.csv" using 1:2 ls 1 notitle, \
