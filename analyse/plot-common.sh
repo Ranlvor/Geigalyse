@@ -2,35 +2,40 @@ mkfifo window-3600-$$.csv
 mkfifo window-300-$$.csv
 mkfifo window-0-$$.csv
 
-{
-sqlite3 ../db/results.db <<EOF
+echoProcessedMesurementsGetStatement() {
+  LIMIT=$1
+  WINDOW=$2
+cat <<EOS
 
+.output window-$WINDOW-$$.csv
+SELECT timestamp - 2208988800, value AS slidingAVG
+FROM slidingaveragecache
+WHERE window = $WINDOW
+ORDER BY timestamp DESC
+LIMIT $LIMIT;
+
+EOS
+
+}
+
+{
+cat <<EOS
 BEGIN TRANSACTION;
 
-.timeout 60000
 .output window-0-$$.csv
 SELECT timestamp - 2208988800, mysvph AS slidingAVG
 FROM processedMesurements
 ORDER BY timestamp DESC
 LIMIT $LIMIT;
+EOS
 
-.output window-300-$$.csv
-SELECT timestamp - 2208988800, value AS slidingAVG
-FROM slidingaveragecache
-WHERE window = 300
-ORDER BY timestamp DESC
-LIMIT $LIMIT;
+echoProcessedMesurementsGetStatement $LIMIT 300
+echoProcessedMesurementsGetStatement $LIMIT 3600
 
-.output window-3600-$$.csv
-SELECT timestamp - 2208988800, value AS slidingAVG
-FROM slidingaveragecache
-WHERE window = 3600
-ORDER BY timestamp DESC
-LIMIT $LIMIT;
-
+cat <<EOS
 COMMIT;
-EOF
-} &
+EOS
+} | sqlite3 ../db/results.db &
 
 gnuplot <<EOF
 
