@@ -7,6 +7,25 @@ echoProcessedMesurementsGetStatement() {
   WINDOW=$2
 cat <<EOS
 
+INSERT INTO slidingaveragecache
+SELECT timestamp, $WINDOW AS window, NULL AS lastIncludedTimestamp, (
+                            SELECT AVG(mysvph)
+                            FROM processedmesurements AS innerPM
+                            WHERE innerPM.timestamp >= outerPM.timestamp - $WINDOW
+                              AND innerPM.timestamp <= outerPM.timestamp + $WINDOW
+                          ) AS value
+
+FROM processedmesurements AS outerPM
+
+WHERE timestamp IN (
+  SELECT pm.timestamp
+  FROM processedmesurements AS pm
+  LEFT JOIN slidingaveragecache AS sac
+        ON (pm.timestamp = sac.timestamp) AND (sac.window = $WINDOW)
+  WHERE sac.timestamp IS NULL
+  ORDER BY pm.timestamp DESC
+  LIMIT $LIMIT);
+
 .output window-$WINDOW-$$.csv
 SELECT timestamp - 2208988800, value AS slidingAVG
 FROM slidingaveragecache

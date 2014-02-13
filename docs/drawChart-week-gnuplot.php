@@ -2,8 +2,6 @@
 header("Cache-Control: no-cache, must-revalidate"); 
 header("Content-Type: image/png");
 include("database.php");
-$db->populateSlidingAverageCache(1440*7, 3600);
-$db->populateSlidingAverageCache(1440*7, 300);
 $handle = popen ("../analyse/plot-weekly.sh", "r");
 $img = new Imagick();
 $img->readImageFile($handle);
