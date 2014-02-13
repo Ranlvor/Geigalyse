@@ -20,6 +20,7 @@ foreach($table as $key => $value) {
 <h2>Older Data</h2>
 <img src="drawChart.php" /><br>
 <!--<img src="drawChart-week.php" /><br>-->
+<img src="drawChart-day-gnuplot.php" /><br>
 <img src="drawChart-week-gnuplot.php" /><br>
 <img src="drawChart-month-gnuplot.php" />
 
