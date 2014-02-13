@@ -1,4 +1,7 @@
 <?php
+if(isset($db))
+  return;
+
 function sqliteHexdec($hex) {
   return hexdec($hex)."";
 }
