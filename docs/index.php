@@ -9,7 +9,7 @@
 <h2>Latest Measurement</h2>
 <table>
 <?php
-include("../analyse/populateMesurements.php");
+include("database.php");
 include("generate-latest-mesurement-array.php");
 
 foreach($table as $key => $value) {

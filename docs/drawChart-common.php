@@ -5,7 +5,7 @@ $pChartPath = "../pChart2.1.4";
  include("$pChartPath/class/pData.class.php");
  include("$pChartPath/class/pDraw.class.php");
  include("$pChartPath/class/pImage.class.php");
- include("../analyse/populateMesurements.php");
+ include("database.php");
 
  /* Create and populate the pData object */
  $MyData = new pData();

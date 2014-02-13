@@ -15,3 +15,4 @@ if(strlen($postdata) == 0) {
 } else {
 	echo "Upload seems legit";
 }
+include("../analyse/populateMesurements.php");

@@ -7,3 +7,4 @@ $db->addGetUploadToDatabase($_GET['id'], $_GET['time'], $_GET['count']);
 
 print_r($_GET);
 echo "done";
+include("../analyse/populateMesurements.php");
