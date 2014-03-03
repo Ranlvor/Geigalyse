@@ -18,7 +18,7 @@ foreach($table as $key => $value) {
 ?>
 </table>
 <h2>Older Data</h2>
-<img src="drawChart.php" /><br>
+<!--<img src="drawChart.php" /><br>-->
 <!--<img src="drawChart-week.php" /><br>-->
 <img src="drawChart-day-gnuplot.php" /><br>
 <img src="drawChart-week-gnuplot.php" /><br>
