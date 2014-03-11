@@ -1,5 +1,5 @@
 #!/bin/sh
-LIMIT="312480";
+LIMIT="40320";
 TIMEFORMAT="%d.%m.";
 
 . ../analyse/plot-common.sh
