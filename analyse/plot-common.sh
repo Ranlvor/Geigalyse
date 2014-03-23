@@ -39,9 +39,9 @@ EOS
 
 {
 cat <<EOS
-BEGIN TRANSACTION;
-
 .timeout 60000
+
+BEGIN TRANSACTION;
 
 .output window-0-$$.csv
 SELECT timestamp - 2208988800, mysvph AS slidingAVG
