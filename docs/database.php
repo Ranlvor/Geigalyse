@@ -96,7 +96,6 @@ class GeigalyseDatabse {
 
   private $getLatestProcessedMesurementsSlidingAverageStmt = null;
   function getLatestProcessedMesurementsSlidingAverage($count, $window) {
-    $this->populateSlidingAverageCache($count, $window);
     if($this->getLatestProcessedMesurementsSlidingAverageStmt  == null) {
       $this->getLatestProcessedMesurementsSlidingAverageStmt = $this->sql->prepare('
         SELECT timestamp, value AS slidingAVG
@@ -114,7 +113,7 @@ class GeigalyseDatabse {
   }
 
   private $populateSlidingAverageCacheStmt = null;
-  function populateSlidingAverageCache($count, $window) {
+  function populateSlidingAverageCache($window) {
     if($this->populateSlidingAverageCacheStmt == null) {
       $this->populateSlidingAverageCacheStmt = $this->sql->prepare('
         INSERT INTO slidingaveragecache
@@ -134,13 +133,11 @@ class GeigalyseDatabse {
                 ON (pm.timestamp = sac.timestamp) AND (sac.window = :window)
           WHERE sac.timestamp IS NULL
           ORDER BY pm.timestamp DESC
-          LIMIT :count
         )
       ');
     }
 
     $this->populateSlidingAverageCacheStmt->bindParam(':window', $window, SQLITE3_INTEGER);
-    $this->populateSlidingAverageCacheStmt->bindParam(':count', $count, SQLITE3_INTEGER);
 
     $this->populateSlidingAverageCacheStmt->execute();
   }

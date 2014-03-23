@@ -1,4 +1,10 @@
 #!/bin/sh
+echo "this skript is not adapted to the new populateMesurements which forks in background and calculates sliding averages"
+exit(1);
+
+
+
+
 echo "Resetting database";
 cd ../db
 sqlite3 uploads.db <<EOS
